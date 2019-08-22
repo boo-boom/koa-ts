@@ -6,7 +6,8 @@
     "no-console": false,
     "quotemark": false,
     "arrow-parens": false,
-    "trailing-comma": false
+    "trailing-comma": false,
+    "max-classes-per-file": false
   },
   "rulesDirectory": []
 }
