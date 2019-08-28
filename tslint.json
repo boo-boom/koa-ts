@@ -8,6 +8,7 @@
     "arrow-parens": false,
     "trailing-comma": false,
     "max-classes-per-file": false,
+    "ordered-imports": false,
     "interface-name": [true, "never-prefix"]
   },
   "rulesDirectory": []

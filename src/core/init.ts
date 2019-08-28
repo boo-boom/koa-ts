@@ -1,6 +1,7 @@
 import { readdirSync } from "fs";
 import Koa from "koa";
 import { resolve } from "path";
+import Router from "koa-router";
 
 class InitManager {
   public static app: Koa;
@@ -10,14 +11,27 @@ class InitManager {
   }
   public static initLoadRouters() {
     const isProd = process.env.NODE_ENV === "production";
-    const apiDirectory = `${process.cwd()}/${isProd ? "dist" : "src"}/routes`;
-    const routes = readdirSync(apiDirectory).filter(
-      item => item.indexOf("index") !== 0
-    );
-    routes.forEach(item => {
-      const route = require(resolve(apiDirectory, item)).default;
-      InitManager.app.use(route.routes());
+    const apiDirectory = `${process.cwd()}/${isProd ? "dist" : "src"}/controller`;
+    const controller = readdirSync(apiDirectory);
+    controller.forEach(file => {
+      const fileName = readdirSync(`${apiDirectory}/${file}`);
+      fileName.forEach(item => {
+        const col = require(resolve(`${apiDirectory}/${file}`, item)).default;
+        console.log(col);
+      });
     });
+    const router = new Router();
+    router.all("/apiagg/m.api/", async ctx => {
+      ctx.body = {
+        a: 1
+      };
+    });
+
+    InitManager.app.use(router.routes());
+    // routes.forEach(item => {
+    //   const route = require(resolve(apiDirectory, item)).default;
+    //   InitManager.app.use(route.routes());
+    // });
   }
 }
 
